@@ -4,9 +4,17 @@
         xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
         xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
         xmlns:local="clr-namespace:Journal"
+        xmlns:sys="clr-namespace:System;assembly=mscorlib"
         mc:Ignorable="d"
-        Title="MainWindow" Height="350" Width="525">
+        Title="Journal" Height="350" Width="525" Background="#FF4B4B4B">
     <Grid>
-        
+        <DatePicker Name="datePicker" HorizontalAlignment="Left" Margin="10,10,0,0" VerticalAlignment="Top" Width="132" SelectedDateChanged="DatePicker_SelectedDateChanged" />
+        <RichTextBox x:Name="journalContentBox" Margin="10,44,10,10" RenderTransformOrigin="0.5,0.5" HorizontalContentAlignment="Stretch" VerticalContentAlignment="Stretch" Background="#FF343434" Foreground="White" AcceptsTab="True" KeyDown="journalContentBox_KeyDown">
+            <FlowDocument>
+                <Paragraph>
+                    <Run Text="RichTextBox"/>
+                </Paragraph>
+            </FlowDocument>
+        </RichTextBox>
     </Grid>
 </Window>

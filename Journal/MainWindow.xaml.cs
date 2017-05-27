@@ -12,6 +12,10 @@ using System.Windows.Media;
 using System.Windows.Media.Imaging;
 using System.Windows.Navigation;
 using System.Windows.Shapes;
+using System.Data.SQLite;
+using System.IO;
+using System.Globalization;
+using System.Threading;
 
 namespace Journal
 {
@@ -20,9 +24,52 @@ namespace Journal
     /// </summary>
     public partial class MainWindow : Window
     {
+        public string DATE = DateTime.Now.ToString("yyyy-MM-dd");
+
         public MainWindow()
         {
             InitializeComponent();
+            this.Title = DATE;
+
+            // Set a fixed date format.
+            CultureInfo ci = CultureInfo.CreateSpecificCulture(CultureInfo.CurrentCulture.Name); ci.DateTimeFormat.ShortDatePattern = "yyyy-MM-dd";
+            Thread.CurrentThread.CurrentCulture = ci;
+
+            datePicker.SelectedDate = DateTime.Today;
+
+            string content = DB.QueryScalar("select content from journal where date ='" + DATE + "'").ToString();
+            journalContentBox.Document.Blocks.Clear();
+            journalContentBox.AppendText(content);
+        }
+
+        private void DatePicker_SelectedDateChanged(object sender, SelectionChangedEventArgs e)
+        {
+            var datepicker = sender as DatePicker;
+            DateTime? date = datepicker.SelectedDate;
+            if (date == null)
+            {
+                // ... A null object.
+                this.Title = "No date";
+            }
+            else
+            {
+                // ... No need to display the time.
+                this.Title = date.Value.ToShortDateString();
+                DATE = this.Title;
+            }
+
+            string content = DB.QueryScalar("select content from journal where date ='" + DATE + "'").ToString();
+            journalContentBox.Document.Blocks.Clear();
+            journalContentBox.AppendText(content);
+        }
+
+        private void journalContentBox_KeyDown(object sender, KeyEventArgs e)
+        {
+            if (e.Key == Key.S && Keyboard.Modifiers == ModifierKeys.Control)
+            {
+                string content = new TextRange(journalContentBox.Document.ContentStart, journalContentBox.Document.ContentEnd).Text;
+                DB.Query("REPLACE INTO `journal` (date, content) values ('" + DATE + "', '" + content + "')");
+            }
         }
     }
 }
