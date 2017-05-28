@@ -39,7 +39,10 @@ namespace Journal
 
             string content = DB.QueryScalar("select content from journal where date ='" + DATE + "'").ToString();
             journalContentBox.Document.Blocks.Clear();
-            journalContentBox.AppendText(content);
+            if (content != "-1")
+            {
+                journalContentBox.AppendText(content);
+            }
         }
 
         private void DatePicker_SelectedDateChanged(object sender, SelectionChangedEventArgs e)
@@ -71,13 +74,7 @@ namespace Journal
             if (e.Key == Key.S && Keyboard.Modifiers == ModifierKeys.Control)
             {
                 string content = new TextRange(journalContentBox.Document.ContentStart, journalContentBox.Document.ContentEnd).Text;
-                DB.Query("REPLACE INTO `journal` (date, content) values ('" + DATE + "', '" + content + "')");
-            }
-            if (e.Key == Key.Enter)
-            {
-                var newPointer = journalContentBox.Selection.Start.InsertLineBreak();
-                journalContentBox.Selection.Select(newPointer, newPointer);
-                e.Handled = true;
+                DB.Query("REPLACE INTO `journal` (date, content) values ('" + DATE + "', '" + @content + "')");
             }
         }
 
@@ -94,6 +91,16 @@ namespace Journal
         private void btnNextDay_Click(object sender, RoutedEventArgs e)
         {
             datePicker.SelectedDate = datePicker.SelectedDate.Value.AddDays(1);
+        }
+
+        private void journalContentBox_PreviewKeyDown(object sender, KeyEventArgs e)
+        {
+            if (e.Key == Key.Enter)
+            {
+                var newPointer = journalContentBox.Selection.Start.InsertLineBreak();
+                journalContentBox.Selection.Select(newPointer, newPointer);
+                e.Handled = true;
+            }
         }
     }
 }

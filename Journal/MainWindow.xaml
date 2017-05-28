@@ -7,9 +7,15 @@
         xmlns:sys="clr-namespace:System;assembly=mscorlib"
         mc:Ignorable="d"
         Title="Journal" Height="700" Width="1000" Background="#FF4B4B4B" Icon="img/main.ico">
+    <Window.Resources>
+        <Style TargetType="{x:Type Paragraph}">
+            <Setter Property="Margin"
+                    Value="0" />
+        </Style>
+    </Window.Resources>
     <Grid>
         <DatePicker Name="datePicker" HorizontalAlignment="Left" Margin="10,10,0,0" VerticalAlignment="Top" Width="132" SelectedDateChanged="DatePicker_SelectedDateChanged" />
-        <RichTextBox x:Name="journalContentBox" Margin="10,44,10,10" RenderTransformOrigin="0.5,0.5" HorizontalContentAlignment="Stretch" VerticalContentAlignment="Stretch" Background="#FF343434" Foreground="White" AcceptsTab="True" KeyDown="journalContentBox_KeyDown" VerticalScrollBarVisibility="Auto">
+        <RichTextBox x:Name="journalContentBox" Margin="10,44,10,10" RenderTransformOrigin="0.5,0.5" HorizontalContentAlignment="Stretch" VerticalContentAlignment="Stretch" Background="#FF343434" Foreground="White" AcceptsTab="True" AcceptsReturn="True" KeyDown="journalContentBox_KeyDown" VerticalScrollBarVisibility="Auto" PreviewKeyDown="journalContentBox_PreviewKeyDown">
             <FlowDocument>
                 <Paragraph>
                     <Run Text="RichTextBox"/>
