@@ -6,15 +6,18 @@
         xmlns:local="clr-namespace:Journal"
         xmlns:sys="clr-namespace:System;assembly=mscorlib"
         mc:Ignorable="d"
-        Title="Journal" Height="350" Width="525" Background="#FF4B4B4B">
+        Title="Journal" Height="700" Width="1000" Background="#FF4B4B4B" Icon="img/main.ico">
     <Grid>
         <DatePicker Name="datePicker" HorizontalAlignment="Left" Margin="10,10,0,0" VerticalAlignment="Top" Width="132" SelectedDateChanged="DatePicker_SelectedDateChanged" />
-        <RichTextBox x:Name="journalContentBox" Margin="10,44,10,10" RenderTransformOrigin="0.5,0.5" HorizontalContentAlignment="Stretch" VerticalContentAlignment="Stretch" Background="#FF343434" Foreground="White" AcceptsTab="True" KeyDown="journalContentBox_KeyDown">
+        <RichTextBox x:Name="journalContentBox" Margin="10,44,10,10" RenderTransformOrigin="0.5,0.5" HorizontalContentAlignment="Stretch" VerticalContentAlignment="Stretch" Background="#FF343434" Foreground="White" AcceptsTab="True" KeyDown="journalContentBox_KeyDown" VerticalScrollBarVisibility="Auto">
             <FlowDocument>
                 <Paragraph>
                     <Run Text="RichTextBox"/>
                 </Paragraph>
             </FlowDocument>
         </RichTextBox>
+        <Button x:Name="btnToday" Content="Today" HorizontalAlignment="Left" Margin="230,12,0,0" VerticalAlignment="Top" Width="75" Click="btnToday_Click"/>
+        <Button x:Name="btnPreviousDay" Content="Previous Day" HorizontalAlignment="Left" Margin="150,12,0,0" VerticalAlignment="Top" Width="75" Click="btnPreviousDay_Click"/>
+        <Button x:Name="btnNextDay" Content="Next Day" HorizontalAlignment="Left" Margin="310,12,0,0" VerticalAlignment="Top" Width="75" Click="btnNextDay_Click"/>
     </Grid>
 </Window>
